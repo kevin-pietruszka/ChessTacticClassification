@@ -9,11 +9,11 @@ These days, sites like lichess and chess.com have become the most popular ways t
 We imagine a program that can analyze moves and give constructive feedback which can be helpful to an intermediate chess player. If they make a bad move that could get a piece stuck, it would output something like “bad move: allows knight to be pinned on b5.” Data from puzzles, matches, and results can be evaluated to help us classify why the next move given by Stockfish is a good move.
 
 Here's a more in depth example:
-![chess1](https://user-images.githubusercontent.com/32807310/136488491-de3785d9-a4e9-4241-bd48-ea586e24ecb1.png)
-In the above puzzle, stockfish recommends that Qxc3 in what appears to be a very basic trade after white responds with Rxc3:
-![chess2](https://user-images.githubusercontent.com/32807310/136488962-ba4af350-45b1-4261-9cac-669797859343.JPG)
-The tactic behind this queen trade is the followup move of Bxd4, which forks the rook on c3 and white’s king on g1:
-![chess3](https://user-images.githubusercontent.com/32807310/136489031-06ebc1b1-ffca-4c8f-ba52-969c1590045d.JPG)
+![chess1](https://user-images.githubusercontent.com/32807310/136492810-1b30453b-7ecd-45b8-b948-095ea8937114.JPG)<br>
+In the above puzzle, stockfish recommends that Qxc3 in what appears to be a very basic trade after white responds with Rxc3:<br>
+![chess2](https://user-images.githubusercontent.com/32807310/136488962-ba4af350-45b1-4261-9cac-669797859343.JPG)<br>
+The tactic behind this queen trade is the followup move of Bxd4, which forks the rook on c3 and white’s king on g1:<br>
+![chess3](https://user-images.githubusercontent.com/32807310/136489031-06ebc1b1-ffca-4c8f-ba52-969c1590045d.JPG)<br>
 
 Through this three stage sequence, Stockfish has recommended all of the best possible moves, specifically assigning them a rating which corresponds to the advantage, in pawns, one player has over the other. In the last screenshot, Stockfish is evaluating black to have an advantage equivalent to 4.9 pawns over white, putting them handedly in the lead. However, Stockfish fails to provide the player with any explanation/classification through these steps of moves as to why this sequence is so advantageous, which deprives the player of a learning opportunity. Our AI would immediately recognize that Qxc3 leads to a fork and inform the player of this, which would allow the player to reach a better understanding why a move is powerful quicker and without requiring prior knowledge to the concept of a fork.
 <br><br>
