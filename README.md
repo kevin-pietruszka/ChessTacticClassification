@@ -1,12 +1,12 @@
 # Chess Tactic Classification & Provision of Conceptual Reasoning Via Machine Learning
 ### Background
 
-Chess and technology have become inextricably intertwined since the first AI, IBM's Deep Blue, beat the best player in the world, Garry Kasparov, in 1977. Since then, chess AI’s have permanently altered how the game is played. By being able to evaluate hundreds of thousands of possible realities in an instant, chess AI’s have enabled everyone from a novice to a grandmaster to view the game at a very technical, analytical level. However, they struggle with communicating conceptual ideas and giving explanations to why a move is good or bad. And, with the resurgence of chess into popular culture, understanding modern engines (such as Stockfish) has become a barrier to entry in learning chess.
+Chess and technology have become intertwined since IBM's Deep Blue beat the best player in the world, Garry Kasparov, in 1977. Since then, chess AI’s have permanently altered how the game is played. By evaluating hundreds of thousands of possibilities, chess AI’s have enabled everyone from a novice to a grandmaster to view the game at a very analytical level. However, they struggle with giving explanations to why a move is good or bad. With the resurgence of chess into popular culture, understanding modern engines (such as Stockfish) has become a barrier to entry for chess.
 
 ### Problem Definition
 
-These days, sites like lichess and chess.com have become the most popular ways to play chess. These sites have built in functionalities which allow players to run an analytical analysis of games via usage of the chess engine Stockfish in the hopes of learning more about the powerful and weak plays they made. However, Stockfish only evaluates moves on a purely numerical scale which does not present the user with a particulary friendly opprotunity to learn.<br><br>
-We imagine a program that can analyze moves and give constructive feedback which can be helpful to an intermediate chess player. If they make a bad move that could get a piece stuck, it would output something like “bad move: allows knight to be pinned on b5.” Data from puzzles, matches, and results can be evaluated to help us classify why the next move given by Stockfish is a good move.
+These days, sites like lichess and chess.com are popular ways to play chess. These sites have built in functionalities which allow players to run an analysis of games via the chess engine Stockfish to learn more about their moves. However, Stockfish only evaluates moves numerically, which is not easy to learn from.<br><br>
+We imagine a program that can analyze moves and give constructive feedback. If a player makes a bad move, our model would output something like “bad move: allows knight to be pinned on b5.” Data from puzzles, matches, and results can be evaluated to help us classify why the next move is good or bad.
 
 Here's a more in depth example:
 ![chess1](https://user-images.githubusercontent.com/32807310/136492810-1b30453b-7ecd-45b8-b948-095ea8937114.JPG)<br>
@@ -15,15 +15,12 @@ In the above puzzle, stockfish recommends that Qxc3 in what appears to be a very
 The tactic behind this queen trade is the followup move of Bxd4, which forks the rook on c3 and white’s king on g1:<br>
 ![chess3](https://user-images.githubusercontent.com/32807310/136489031-06ebc1b1-ffca-4c8f-ba52-969c1590045d.JPG)<br>
 
-Through this three stage sequence, Stockfish has recommended all of the best possible moves, specifically assigning them a rating which corresponds to the advantage, in pawns, one player has over the other. In the last screenshot, Stockfish is evaluating black to have an advantage equivalent to 4.9 pawns over white, putting them handedly in the lead. However, Stockfish fails to provide the player with any explanation/classification through these steps of moves as to why this sequence is so advantageous, which deprives the player of a learning opportunity. Our AI would immediately recognize that Qxc3 leads to a fork and inform the player of this, which would allow the player to reach a better understanding why a move is powerful quicker and without requiring prior knowledge to the concept of a fork.
+Through this three stage sequence, Stockfish has recommended all of the best possible moves, assigning them a rating corresponding to the advantage one player has over the other. In the last screenshot, Stockfish is evaluating black to have an advantage equivalent to 4.9 pawns over white, putting them in the lead. However, Stockfish fails to provide the player with any explanation/classification through these moves as to why this sequence is advantageous, which deprives the player of understanding. Our AI would recognize that Qxc3 leads to a fork and inform the player, allowing the player to quickly understand why a move is powerful without requiring prior knowledge of forking.
 <br><br>
-Of course, this functionality would become more and more useful as situations increase in complexity, especially in scenarios in which a player made a poor move where the AI could point out what the player left themselves open to, even if that situation never played out in the game being analyzed.
-
-
 
 ### Methods
 
-We will use supervised learning in order to accomplish this task by using the puzzle data sets from lichess.com. These data sets have sections dedicated to different strategies like forking with the knights that could be used to train for certain topics. In regards to the method of machine learning, a neural network or a bayes net would be used in order to learn from these data sets and attempt to classify. A bayes net approach would be a good match for the problem since the dataset contains the board states that lead up to various puzzle solutions whereas a neural network would be able to take in a wide variety of features that can be used to attempt to classify the problem. 
+We will use supervised learning to accomplish this task via the puzzle data sets from lichess.com. These datasets have sections dedicated to different strategies like forking with the knights that could be used to train for certain topics. In regards to the method of machine learning, a neural network or a bayes net would be used in order to learn from these data sets and attempt to classify. A bayes net approach would be a good match for the problem since the dataset contains the board states that lead up to various puzzle solutions whereas a neural network would be able to take in a wide variety of features that can be used to attempt to classify the problem. 
 
 ### Potential Results/ Discussion
 
@@ -40,6 +37,7 @@ Aiden Melone - Data Interpreter, Deliverables guy<br>
 Kevin Pietruszka - Github manager, Model Trainer<br>
 
 
+![image](https://user-images.githubusercontent.com/48032258/136494906-a0c19442-9e55-457e-a400-01472a5132f5.png)
 
 
 ### References
