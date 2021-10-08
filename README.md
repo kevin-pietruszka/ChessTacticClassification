@@ -1,4 +1,4 @@
-# Chess AI Tactic Classification & Provision of Conceptual Reasoning.
+# Chess Tactic Classification & Provision of Conceptual Reasoning Via Machine Learning
 ### Background
 
 Chess and technology have become inextricably intertwined since the first AI, IBM's Deep Blue, beat the best player in the world, Garry Kasparov, in 1977. Since then, chess AI’s have permanently altered how the game is played. By being able to evaluate hundreds of thousands of possible realities in an instant, chess AI’s have enabled everyone from a novice to a grandmaster to view the game at a very technical, analytical level. However, they struggle with communicating conceptual ideas and giving explanations to why a move is good or bad. And, with the resurgence of chess into popular culture, understanding modern engines (such as Stockfish) has become a barrier to entry in learning chess.
