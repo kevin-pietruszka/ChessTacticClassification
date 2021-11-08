@@ -12,14 +12,20 @@ identifiedThemes = ['crushing', 'hangingPiece', 'long', 'middlegame', 'advantage
 
 #Questionable: exposedKing, defensiveMove
 desiredThemes = ['hangingPiece', 
-                    'mate', 'mateIn2', 'fork', 'trappedPiece', 'pin', 'backRankMate',
+                    'fork', 'trappedPiece', 'pin', 'backRankMate',
                     'skewer', 'discoveredAttack', 'exposedKing', 
                     'defensiveMove', 'advancedPawn', 'deflection', 'promotion',
-                    'mateIn1', 'clearance', 'quietMove', 'sacrifice', 
+                    'clearance', 'quietMove', 'sacrifice', 
                     'attraction', 'hookMate', 'intermezzo', 'xRayAttack', 
-                    'capturingDefender', 'mateIn3', 'zugzwang', 
-                    'interference', 'doubleCheck', 'arabianMate', 'smotheredMate', 'mateIn4', 'anastasiaMate', 
-                    'enPassant', 'castling', 'dovetailMate', 'mateIn5', 'doubleBishopMate', 'bodenMate', 'underPromotion']
+                    'capturingDefender', 'zugzwang', 
+                    'interference', 'doubleCheck', 'arabianMate', 'smotheredMate', 'anastasiaMate', 
+                    'enPassant', 'castling', 'dovetailMate', 'doubleBishopMate', 'bodenMate', 'underPromotion']
+
+def listToString(s):
+    str = ""
+    for i in s:
+        str += i
+    return str
 
 def themeFinder():
     #CSV Format: PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
@@ -27,9 +33,20 @@ def themeFinder():
     #Desired Format: FEN,Moves,Themes(only some)
     data = data[[1,2,7]]
     themes = []
-    for ind in data.index:
+    for ind in range(100):
         words = data[7][ind].split(" ")
         for i in words:
             if i not in themes:
                 themes.append(i)
     print(themes)
+
+def dataCutter():
+    data = pd.read_csv('lichess_db_puzzle.csv', header=None)
+    data = data[[1,2,7]]
+    data[7] = data[7].map(lambda x: " ".join([t for t in x.split() if t in desiredThemes]))
+    data = data[data[7] != ""]
+    
+    print(data)
+    data.to_csv("out.csv", index=False, header=False)
+
+dataCutter()
