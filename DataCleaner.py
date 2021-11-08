@@ -21,19 +21,13 @@ desiredThemes = ['hangingPiece',
                     'interference', 'doubleCheck', 'arabianMate', 'smotheredMate', 'anastasiaMate', 
                     'enPassant', 'castling', 'dovetailMate', 'doubleBishopMate', 'bodenMate', 'underPromotion']
 
-def listToString(s):
-    str = ""
-    for i in s:
-        str += i
-    return str
-
 def themeFinder():
     #CSV Format: PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
     data = pd.read_csv('lichess_db_puzzle.csv', header=None)
     #Desired Format: FEN,Moves,Themes(only some)
     data = data[[1,2,7]]
     themes = []
-    for ind in range(100):
+    for ind in data.values:
         words = data[7][ind].split(" ")
         for i in words:
             if i not in themes:
