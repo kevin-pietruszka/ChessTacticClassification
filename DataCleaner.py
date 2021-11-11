@@ -23,7 +23,7 @@ desiredThemes = ['hangingPiece',
 
 def themeFinder():
     #CSV Format: PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
-    data = pd.read_csv('lichess_db_puzzle.csv', header=None)
+    data = pd.read_csv('data/lichess_db_puzzle.csv', header=None)
     #Desired Format: FEN,Moves,Themes(only some)
     data = data[[1,2,7]]
     themes = []
@@ -35,12 +35,12 @@ def themeFinder():
     print(themes)
 
 def dataCutter():
-    data = pd.read_csv('lichess_db_puzzle.csv', header=None)
+    data = pd.read_csv('data/lichess_db_puzzle.csv', header=None)
     data = data[[1,2,7]]
     data[7] = data[7].map(lambda x: " ".join([t for t in x.split() if t in desiredThemes]))
     data = data[data[7] != ""]
     
     print(data)
-    data.to_csv("out.csv", index=False, header=False)
+    data.to_csv("data/puzzle_data.csv", index=False, header=False)
 
 dataCutter()
