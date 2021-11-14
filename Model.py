@@ -18,8 +18,7 @@ test_labels = puzzle_labels.tail(test_ind)
 
 #Builds the model
 mlp = tf.keras.Sequential()
-mlp.add(tf.keras.Input(shape=(train_ind, )))
-mlp.add(tf.keras.layers.Dense(2, activation='relu'))
+mlp.add(tf.keras.Input(2))
 mlp.add(tf.keras.layers.Dense(1, activation='relu'))
 #12 Classifications
 mlp.add(tf.keras.layers.Dense(12, activation='softmax'))
