@@ -15,13 +15,18 @@ identifiedThemes = ['crushing', 'hangingPiece', 'long', 'middlegame', 'advantage
 #Questionable: exposedKing, defensiveMove
 desiredThemes = ['hangingPiece', 
                     'fork', 'trappedPiece', 'pin', 'backRankMate',
-                    'skewer', 'discoveredAttack', 'exposedKing', 
-                    'defensiveMove', 'advancedPawn', 'deflection', 'promotion',
-                    'clearance', 'quietMove', 'sacrifice', 
-                    'attraction', 'hookMate', 'intermezzo', 'xRayAttack', 
-                    'capturingDefender', 'zugzwang', 
-                    'interference', 'doubleCheck', 'arabianMate', 'smotheredMate', 'anastasiaMate', 
-                    'enPassant', 'castling', 'dovetailMate', 'doubleBishopMate', 'bodenMate', 'underPromotion']
+                    'skewer']
+
+
+label_dict = {
+    'hangingPiece'      : [1, 0, 0, 0, 0, 0],
+    'fork'              : [0, 1, 0, 0, 0, 0],
+    'trappedPiece'      : [0, 0, 1, 0, 0, 0],
+    'pin'               : [0, 0, 0, 1, 0, 0],
+    'backRankMate'      : [0, 0, 0, 0, 1, 0],
+    'skewer'            : [0, 0, 0, 0, 0, 1]
+}
+
 
 def themeFinder():
     #CSV Format: PuzzleId,FEN,Moves,Rating,RatingDeviation,Popularity,NbPlays,Themes,GameUrl
@@ -55,7 +60,7 @@ def dataConverter():
                 print(i) 
             puzzle = pr(data[0][i], data[1][i], data[2][i].split(" "))
             p.append(puzzle.get_matrix_representation())
-        np.savez_compressed("data/matrix_rep%s" % file, *p, dtype=object)
+        np.savez_compressed("data/matrix_rep%s" % file, np.array(p))
 
 def dataSpliter():
     for i in range(2, 13, 2):
@@ -66,6 +71,35 @@ def dataSpliter():
         print(temp)
         filename = "data/puzzle_data%s.csv" % (i)
         temp.to_csv(filename, index=False, header=False)
+        
+def labeler():
+    for num in range(2, 13, 2):
+        labels = pd.read_csv("data/puzzle_data%s.csv" % num, 
+                        names=["fen", "moves", "labels"]).pop("labels")
+        labels = labels.map(lambda x: x.split())
+        labels = labels.to_numpy()
+        all_onehots = np.empty((labels.shape[0], 6))
+        i = 0
+        for label_list in labels:
+            labels_onehot = np.zeros((6))
+            for label in label_list:
+                labels_onehot += label_dict[label]
+            all_onehots[i] = labels_onehot
+            i += 1
+            
+        np.savez_compressed("data/label%s" % num, all_onehots)
+
+dataConverter()
+# labeler()
+# labels2 = np.load("data/label12.npz", allow_pickle=True)
+# for x in labels2.values():
+#     label2 = x
+# print(label2.shape)
+
+# db = np.load("data/matrix_rep12.npz", allow_pickle=True)
+# for x in db.values():
+#     db = x
+# print(db.shape)
 
 
 # puzzlesdb = np.load("data/matrix_rep%s.npz" % 2)
@@ -73,11 +107,11 @@ def dataSpliter():
 # for i in range(1, 2):
 #     print(puzzlesdb[str(i)])
 
-print("Post data converter")
-container = np.load("data/matrix_rep12.npz", allow_pickle=True)
-# for v in container.keys():
-#     print(v)
-print(container.values())
+# print("Post data converter")
+# container = np.load("data/matrix_rep12.npz", allow_pickle=True)
+# # for v in container.values()):
+# #     print(v)
+# print(container.values())
 # print(np.shape(container['arr_0']))
 # test = [container[key] for key in container]
 # print(type(test))
