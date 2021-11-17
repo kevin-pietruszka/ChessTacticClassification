@@ -6,10 +6,16 @@ import math
 def designModel(num):
     # puzzlesdb = pd.read_csv("data/puzzle_data%s.csv" % num, 
     #                     names=["fen", "moves", "labels"]).pop("labels")
-    puzzlesdb = list(np.load("data/matrix_rep%s.npz" % num, allow_pickle=True).values())
+    puzzlesdb_view = np.load("data/matrix_rep%s.npz" % num, allow_pickle=True)
     puzzle_labels = pd.read_csv("data/puzzle_data%s.csv" % num, 
                         names=["fen", "moves", "labels"]).pop("labels")
     print("Files Loaded")
+    
+    puzzlesdb = np.empty((len(puzzlesdb_view.values()), num+1, 8, 8, 12))
+    i = 0
+    for puz in puzzlesdb_view.values():
+        puzzlesdb[i] = puz
+        i += 1
 
     #Allocates first 80% of database to training
     train_ind = math.floor(len(puzzlesdb) * .8)
@@ -33,13 +39,14 @@ def designModel(num):
     mlp.summary()
 
     mlp.compile(optimizer='adam',
-                loss='categorical_crossentropy',
+                loss='sparse_categorical_crossentropy',
                 metrics=['accuracy']
                 )
+
 
     mlp.fit(puzzle_train, train_labels, epochs=10)
     test_loss, test_acc = mlp.evaluate(puzzle_test,  test_labels, verbose=2)
     print('\nTest accuracy:', test_acc)
     print('\nTest loss:', test_loss)
 
-designModel(2)
+designModel(12)
