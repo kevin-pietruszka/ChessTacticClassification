@@ -44,7 +44,7 @@ class PuzzleRepresentation:
         # List of fens
         self.states = self.get_all_states()
         self.matrix_rep = self.get_matrix_representation()
-        self.print_board()
+        #self.print_board()
 
     
     def get_all_states(self) -> list:

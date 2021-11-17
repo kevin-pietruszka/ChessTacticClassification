@@ -1,4 +1,6 @@
 import pandas as pd
+from PuzzleRepresention import PuzzleRepresentation as pr
+import numpy as np
 
 identifiedThemes = ['crushing', 'hangingPiece', 'long', 'middlegame', 'advantage', 'endgame', 'short', 
                     'master', 'mate', 'mateIn2', 'fork', 'trappedPiece', 'pin', 'backRankMate', 'masterVsMaster', 
@@ -43,4 +45,40 @@ def dataCutter():
     print(data)
     data.to_csv("data/puzzle_data.csv", index=False, header=False)
 
-dataCutter()
+def dataConverter():
+    for file in range(2, 13, 2):
+        filename = "data/puzzle_data%s.csv" % file
+        data = pd.read_csv(filename, header=None)
+        p = []
+        for i in range(data.shape[0]):
+            if (i % 500 == 0):
+                print(i) 
+            puzzle = pr(data[0][i], data[1][i], data[2][i].split(" "))
+            p.append(puzzle.get_matrix_representation())
+        np.savez_compressed("data/matrix_rep%s" % file, *p, dtype=object)
+
+def dataSpliter():
+    for i in range(2, 13, 2):
+        temp = pd.read_csv('data/puzzle_data.csv', header=None)
+        temp[1] = temp[1].map(lambda x: " ".join([t for t in x.split() if len(x.split()) == i]))
+        print(temp)
+        temp = temp[temp[1] != ""]
+        print(temp)
+        filename = "data/puzzle_data%s.csv" % (i)
+        temp.to_csv(filename, index=False, header=False)
+
+
+# puzzlesdb = np.load("data/matrix_rep%s.npz" % 2)
+# print(len(puzzlesdb))
+# for i in range(1, 2):
+#     print(puzzlesdb[str(i)])
+
+print("Post data converter")
+container = np.load("data/matrix_rep12.npz", allow_pickle=True)
+# for v in container.keys():
+#     print(v)
+print(container.values())
+# print(np.shape(container['arr_0']))
+# test = [container[key] for key in container]
+# print(type(test))
+# print(np.shape(test[0]))
