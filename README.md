@@ -104,13 +104,11 @@ Test Loss: 1023.130
 
 ### Neural Network Phase 1 Discussion
 
-We used a NN model because puzzles and the game of chess greatly depend on the previous states of the board.
-
 In terms of numerical relationships, models which had a higher volume of input data expectedly corresponded to high loss values; model 4, which had the most training data (~440,000) had the most loss (240209.563) whereas model 10, which had the least training data (~7,800) had the least loss (1023.130). Model accuracy was more complexity correlated, seemingly depending on a combination of the amount of training data and the number of puzzles/moves/input features. The model had a .703 accuracy for model 2 and was more successful by comparison to the rest of the models.
 
 One thing to take away from the results is that although the accuracy is much higher than a guess, the model still makes many mistakes. This means that if this were to eventually be displayed as a tool for the online chess community the accuracy needs to be higher, which has led us to look for ways to improve the results. Since we chose to split the data into the different moves required for the puzzle, we had a smaller amount of data than before. The smaller dataset had a negative impact on the accuracy, but this was necessary because of the large variance between the types of puzzles.
 
-We have tuned our parameters and used multiple methods for conducting our neural network including stochastic gradient descent, Adam&#39;s optimizer, and root mean squared propagation. Each of these had their own tuning necessary and we were able to find the best ones that worked for us after much trial and error.
+Additionally, the results of this proof of concept conved that this nureal network implementation held promise and that with tuning of the model, some amount of improvement could be made. Potential areas for improvement included trialing different optimizers, attempting to add more complex layers, and generally attempting to tackle the issue of overfitting which impacted this first implementation so negatively.
 
 ### Decision Tree
 
@@ -159,5 +157,4 @@ Overall, the best case accuracy decreased over time between the three optimizers
 ### Conclusion
 
 To recap on the content covered within this paper, the original motivation was to build a technology which had the capability of providing new chess players with an answer to &quot;WHY?&quot; a move recommended by a chess engine is good. This goal was accomplished, in an admittedly limited capacity, by utilizing Lichess&#39; open source puzzle database to train a variety of supervised learning technologies including a basic neural network, a decision tree, and a more advanced implementation of a neural network. It was found that, while the decision tree implementation was promisingly consistent over puzzle move length, it&#39;s performance was not convertible to situations which had more features, more data, or more themes due to the high technological cost required when generating tree features. Otherwise, neural networks proved to be superior, if not temperamental, in scenarios involving larger groupings of themes and data.
-
 Given these takeaways, our team recommends to those which wish to further improve upon the strides taken in this report to consider a neural network approach more analytically, and, perhaps, to even adapt a deep learning approach, as our team believes that there&#39;s still yet unexplored potentials in a neural network implementation.
