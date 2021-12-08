@@ -12,15 +12,15 @@ We imagine a program that can analyze moves and give helpful constructive feedba
 
 Example:
 
-In the following puzzle, stockfish recommends that Qxc3 in what appears to be a very basic trade after white responds with Rxc3: ![](RackMultipart20211208-4-18jw9y3_html_8d235bdf9b6d88ed.png)
+In the following puzzle, stockfish recommends that Qxc3 in what appears to be a very basic trade after white responds with Rxc3: ![chess1](https://user-images.githubusercontent.com/70602902/145196361-832befcd-16a9-43e3-b4eb-f00aebaf02cb.png)
 
-The tactic behind this queen trade is the followup move of Bxd4, which forks the rook on c3 and white&#39;s king on g1: ![](RackMultipart20211208-4-18jw9y3_html_ba3517039543008b.png)
+The tactic behind this queen trade is the followup move of Bxd4, which forks the rook on c3 and white&#39;s king on g1: ![chess2](https://user-images.githubusercontent.com/70602902/145196363-bc4e1ea8-7d50-4eaa-84f0-154a51cfda29.png)
 
 This sequence is relatively easy to understand after tracing to its conclusion. However, as situations become increasingly complicated/ambiguous, it would be useful to know what a certain move insinuates, especially in more complex scenarios. Our AI can provide players with conceptual explanations as to WHY a move is impactful. In the above example, our algorithm will still recommend Qxc3 but would also define that the exchange would lead to a fork.
 
 **Data Collection**
 
-Our raw data was sourced from [https://database.lichess.org/#puzzles](https://database.lichess.org/#puzzles), which contains a csv hosting all of the puzzles hosted and collected on lichess.com. This looked like the following: ![](RackMultipart20211208-4-18jw9y3_html_719aed66d7fdffe3.png)
+Our raw data was sourced from [https://database.lichess.org/#puzzles](https://database.lichess.org/#puzzles), which contains a csv hosting all of the puzzles hosted and collected on lichess.com. This looked like the following: ![data](https://user-images.githubusercontent.com/70602902/145196365-7e50968d-cc7e-447a-8cdf-505a6da769c2.png)
 
 Each entry in the CSV contained both the initial board state in FEN notation (column 2), the moves necessary to finish the puzzle (column 3) and &quot;theme&quot; tags (column 8) categorizing which type of puzzle each instance was. We then cleaned the data, which happened in a few steps.
 
@@ -52,9 +52,9 @@ For assessing our model, we chose to use the Adam optimizer, a loss function of 
 
 Recall that we split our data into the different number of moves that are required to solve the puzzles. We ran our algorithm for 6 of these datasets: 2, 4, 6, 8, and 10. Because of the way we captured our data, we simply needed to change the parameter in our call to designModel() in order to reference another dataset and run the model. Below, we have the results of the algorithm for the puzzles that required two moves to solve.
 
-![](RackMultipart20211208-4-18jw9y3_html_fa4bcb8ea96c4f92.png)
+![2 loss](https://user-images.githubusercontent.com/70602902/145196351-0113e645-389d-4c56-bd14-a27d647ee8c4.png)
 
-![](RackMultipart20211208-4-18jw9y3_html_f90e9500a5d085b5.png)
+![2 acc](https://user-images.githubusercontent.com/70602902/145196349-9aebe637-bc4e-469f-9936-fb705ec194eb.png)
 
 Testing accuracy: .708
 
@@ -62,9 +62,9 @@ Test Loss: 1981.205
 
 Here is our model for puzzles with 4 moves:
 
-![](RackMultipart20211208-4-18jw9y3_html_b719761f17014c5.png)
+![4 loss](https://user-images.githubusercontent.com/70602902/145196353-fceeca96-df34-4d9c-aaa1-b95c4c29a352.png)
 
-![](RackMultipart20211208-4-18jw9y3_html_ca1ac673eb39b23.png)
+![4 acc](https://user-images.githubusercontent.com/70602902/145196352-b8297d73-1362-43c6-a0e5-c648f82c8b0d.png)
 
 Testing accuracy: .479
 
@@ -72,25 +72,25 @@ Test Loss: 240209.563
 
 Now here are our graphs for the rest of the datasets.
 
-![](RackMultipart20211208-4-18jw9y3_html_d15da5385313b954.png)
+![6 loss](https://user-images.githubusercontent.com/70602902/145196356-358c601f-96c5-480d-96e9-868314bd29ad.png)
 
-![](RackMultipart20211208-4-18jw9y3_html_febb1bcd76268c40.png)
+![6 acc](https://user-images.githubusercontent.com/70602902/145196354-948c8b46-1f97-4f2b-8817-f2756fec6005.png)
 
 Testing accuracy: .49
 
 Test Loss: 77623.359
 
-![](RackMultipart20211208-4-18jw9y3_html_14888435a64c0fab.png)
+![8 loss](https://user-images.githubusercontent.com/70602902/145196358-1ca0112f-7c57-4a91-b3b6-369fd6d7c11f.png)
 
-![](RackMultipart20211208-4-18jw9y3_html_3394ecd3681e55c3.png)
+![8 acc](https://user-images.githubusercontent.com/70602902/145196357-d2a3f443-43c4-4dd4-bf3c-57c82dce73c6.png)
 
 Testing accuracy: .530
 
 Test Loss: 7406.889
 
-![](RackMultipart20211208-4-18jw9y3_html_22ca4120be773275.png)
+![10 loss](https://user-images.githubusercontent.com/70602902/145196708-c93abec4-bba1-4165-bb39-3fd85f5a7c47.png)
 
-![](RackMultipart20211208-4-18jw9y3_html_514783258b91b7b1.png)
+![10 acc](https://user-images.githubusercontent.com/70602902/145196705-d11e5f60-d71e-441f-a276-3f3bbaf31191.png)
 
 Testing accuracy: .512
 
@@ -112,7 +112,7 @@ After doing some experimenting with sklearn&#39;s library for decision trees, it
 
 **Decision Tree Results &amp; Discussion**
 
-![](RackMultipart20211208-4-18jw9y3_html_4ec47677f65c7f02.png)
+![tree](https://user-images.githubusercontent.com/70602902/145196367-f2832443-4d92-4375-9231-7687e632c0e5.png)
 
 The decision tree, overall, kept a steady accuracy at around 60% for most of the datasets. Although this value seems impressive, these sets only included 6 desired themes out of countless others that were simpler to classify. To expand this model, to include more themes, more features would have to be included in order to help the decision tree obtain more information for its branches. This causes two problems. For one, generating more features for the data would mean that manual pattern recognition would have to be put into place in order to determine features that would be relevant to the new features. Second, increasing the amount of themes and likewise features, greatly increases the time complexity of generating the data and training the model. To develop the current features used, stockfish&#39;s algorithms have to be run on each FEN which greatly increases the time to parse all of the raw data. Due to these reasons, a decision tree, although showing promising results, would ultimately not be feasible for future iterations and expansions of the project.
 
@@ -122,21 +122,17 @@ Reflection upon the decaying accuracy and exponentially increasing loss trends d
 
 **Neural Network Phase 2 Results**
 
-2 Moves: ![](RackMultipart20211208-4-18jw9y3_html_a071dd0c7c20941.png)
+2 Moves: ![2 Moves](https://user-images.githubusercontent.com/70602902/145195609-89c10621-215f-428e-aead-d513d9b747cf.png)
 
-4 Moves:
+4 Moves: ![4 Moves](https://user-images.githubusercontent.com/70602902/145195610-bc0b3cf6-2aaf-400f-954f-69f15af1d757.png)
 
-![](RackMultipart20211208-4-18jw9y3_html_41f982f5619b1e37.png)
+6 Moves: ![6 Moves](https://user-images.githubusercontent.com/70602902/145195611-bd71874d-a9fe-4f5b-a79c-a085a02bd77b.png)
 
-6 Moves: ![](RackMultipart20211208-4-18jw9y3_html_b342838299bed6e.png)
+8 Moves: ![8 Moves](https://user-images.githubusercontent.com/70602902/145195612-7c3ad394-c345-407e-84bf-ac2aa5956197.png)
 
-8 Moves: ![](RackMultipart20211208-4-18jw9y3_html_e316a343adaf705.png)
+Overall Testing Accuracy: ![acc](https://user-images.githubusercontent.com/70602902/145196360-036d9a11-aa93-4c86-8777-cee9c06450e7.png)
 
-Overall Testing Accuracy: ![](RackMultipart20211208-4-18jw9y3_html_57795f0ecf5a18e3.png)
-
-Overall Testing Loss (log scale):
-
-![](RackMultipart20211208-4-18jw9y3_html_db778ddf128bea22.png)
+Overall Testing Loss (log scale): ![acc log](https://user-images.githubusercontent.com/70602902/145196359-8ad25517-93ab-4d29-834f-44da086d8f03.png)
 
 **Neural Network Phase 2 Discussion**
 
