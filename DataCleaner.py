@@ -89,7 +89,59 @@ def labeler():
             
         np.savez_compressed("data/label%s" % num, all_onehots)
 
-dataConverter()
+def tree_data(num):
+
+    puzzles_file = pd.read_csv("data/puzzle_data%s.csv" % num, header=None)
+
+    out = []
+
+    for p in range(5000):
+
+        if p % 250 == 0:
+            print(p)
+
+        puzzle = pr(puzzles_file[0][p], puzzles_file[1][p], puzzles_file[2][p].split(' '))
+
+        out.append(puzzle.tree_features())
+
+    tmp = pd.DataFrame(out)
+
+    tmp.to_csv("data/puzzle_data_tree%s.csv" % num, index=False, header=None)
+    np.savez_compressed("data/matrix_tree%s" % num, tmp)
+
+
+def tree_labels(num ):
+    puzzles_file = pd.read_csv("data/puzzle_data%s.csv" % num, header=None)
+
+    labels = puzzles_file[2]
+    all_onehots = np.empty((labels.shape[0], 6))
+
+    for i in range(len(labels)):
+        labels_onehot = np.zeros((6))
+        lbl = labels[i].split(' ')
+        for l in lbl:
+            if l in desiredThemes:
+                labels_onehot += label_dict[l]
+        
+        all_onehots[i] = labels_onehot
+
+    np.savez_compressed("data/label_tree%s" % num, all_onehots)
+
+
+
+if __name__ == '__main__':
+    # tree_data(2)
+    tree_labels(2)
+
+    tree_data(4)
+    tree_labels(4)
+
+    tree_data(6)
+    tree_labels(6)
+
+    tree_data(8)
+    tree_labels(8)
+
 # labeler()
 # labels2 = np.load("data/label12.npz", allow_pickle=True)
 # for x in labels2.values():
