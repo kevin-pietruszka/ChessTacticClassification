@@ -1,5 +1,9 @@
+from typing import final
 import chess
 import numpy as np
+from stockfish import Stockfish
+from statistics import mode
+
 
 piece_dict = {
     'p' : [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -76,6 +80,43 @@ class PuzzleRepresentation:
 
         return mtx
 
+    def _material(self):
+
+        init_board = self.states[0].split(' ')[0]
+        final_board = self.states[-1].split(' ')[0]
+
+        v=dict(zip('pbnrqPBNRQ',[-1,-3,-3,-5,-9,1,3,3,5,9]))
+        
+        a = [v.get(c,0) for c in init_board]
+        b = [v.get(c,0) for c in final_board]
+
+        return abs(sum(a) - sum(b))
+
+
+    def tree_features(self):
+
+        sf = Stockfish()
+
+        init = chess.Board(self.states[0])
+        final = chess.Board(self.states[-1])
+
+        player_pieces = 'white' if init.turn else 'black'
+
+        sf.set_fen_position(self.states[0])
+        tmp = sf.get_evaluation()
+        sf.make_moves_from_current_position(self.moves)
+        tmp2 = sf.get_evaluation()
+        cm = 1 if tmp2['type'] == 'mate' else 0
+
+        p = []
+        for i in range(len(self.moves)):
+            state = chess.Board(self.states[i])
+            pos = self.moves[i][:2]
+            piece = state.piece_at(chess.SQUARE_NAMES.index(pos)).symbol()
+            p.append(piece)
+
+        return [abs(tmp2['value'] - tmp['value']), cm, mode(p), self._material()]
+
     def board(self) -> chess.Board:
         return self.board 
 
@@ -95,6 +136,12 @@ class PuzzleRepresentation:
                                 check = False
                         if check:
                             print(tuple[0], end=" ")
-                print("")
+                print('')
+            print('\n')
 
-        
+
+if __name__ == '__main__':
+    # pr = PuzzleRepresentation('r6k/pp2r2p/4Rp1Q/3p4/8/1N1P2R1/PqP2bPP/7K b - - 0 24', 'f2g3 e6e7 b2b1 b3c1 b1c1 h6c1', 'hangingPiece')
+    pr = PuzzleRepresentation('4r1k1/5ppp/r1p5/p1n1RP2/8/2P2N1P/2P3P1/3R2K1 b - - 0 21','e8e5 d1d8 e5e8 d8e8','backRankMate')
+    pr._material()
+    print(pr.tree_features())
