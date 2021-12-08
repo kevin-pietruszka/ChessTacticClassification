@@ -12,15 +12,21 @@ We imagine a program that can analyze moves and give helpful constructive feedba
 
 Example:
 
-In the following puzzle, stockfish recommends that Qxc3 in what appears to be a very basic trade after white responds with Rxc3: ![chess1](https://user-images.githubusercontent.com/70602902/145196361-832befcd-16a9-43e3-b4eb-f00aebaf02cb.png)
+In the following puzzle, stockfish recommends that Qxc3 in what appears to be a very basic trade after white responds with Rxc3: 
 
-The tactic behind this queen trade is the followup move of Bxd4, which forks the rook on c3 and white&#39;s king on g1: ![chess2](https://user-images.githubusercontent.com/70602902/145196363-bc4e1ea8-7d50-4eaa-84f0-154a51cfda29.png)
+![chess1](https://user-images.githubusercontent.com/70602902/145196361-832befcd-16a9-43e3-b4eb-f00aebaf02cb.png)
+
+The tactic behind this queen trade is the followup move of Bxd4, which forks the rook on c3 and white&#39;s king on g1: 
+
+![chess2](https://user-images.githubusercontent.com/70602902/145196363-bc4e1ea8-7d50-4eaa-84f0-154a51cfda29.png)
 
 This sequence is relatively easy to understand after tracing to its conclusion. However, as situations become increasingly complicated/ambiguous, it would be useful to know what a certain move insinuates, especially in more complex scenarios. Our AI can provide players with conceptual explanations as to WHY a move is impactful. In the above example, our algorithm will still recommend Qxc3 but would also define that the exchange would lead to a fork.
 
 **Data Collection**
 
-Our raw data was sourced from [https://database.lichess.org/#puzzles](https://database.lichess.org/#puzzles), which contains a csv hosting all of the puzzles hosted and collected on lichess.com. This looked like the following: ![data](https://user-images.githubusercontent.com/70602902/145196365-7e50968d-cc7e-447a-8cdf-505a6da769c2.png)
+Our raw data was sourced from [https://database.lichess.org/#puzzles](https://database.lichess.org/#puzzles), which contains a csv hosting all of the puzzles hosted and collected on lichess.com. This looked like the following: 
+
+![data](https://user-images.githubusercontent.com/70602902/145196365-7e50968d-cc7e-447a-8cdf-505a6da769c2.png)
 
 Each entry in the CSV contained both the initial board state in FEN notation (column 2), the moves necessary to finish the puzzle (column 3) and &quot;theme&quot; tags (column 8) categorizing which type of puzzle each instance was. We then cleaned the data, which happened in a few steps.
 
@@ -130,9 +136,13 @@ Reflection upon the decaying accuracy and exponentially increasing loss trends d
 
 8 Moves: ![8 Moves](https://user-images.githubusercontent.com/70602902/145195612-7c3ad394-c345-407e-84bf-ac2aa5956197.png)
 
-Overall Testing Accuracy: ![acc](https://user-images.githubusercontent.com/70602902/145196360-036d9a11-aa93-4c86-8777-cee9c06450e7.png)
+Overall Testing Accuracy: 
 
-Overall Testing Loss (log scale): ![acc log](https://user-images.githubusercontent.com/70602902/145196359-8ad25517-93ab-4d29-834f-44da086d8f03.png)
+![acc](https://user-images.githubusercontent.com/70602902/145196360-036d9a11-aa93-4c86-8777-cee9c06450e7.png)
+
+Overall Testing Loss (log scale): 
+
+![acc log](https://user-images.githubusercontent.com/70602902/145196359-8ad25517-93ab-4d29-834f-44da086d8f03.png)
 
 **Neural Network Phase 2 Discussion**
 
