@@ -52,8 +52,6 @@ For assessing our model, we chose to use the Adam optimizer, a loss function of 
 
 Recall that we split our data into the different number of moves that are required to solve the puzzles. We ran our algorithm for 6 of these datasets: 2, 4, 6, 8, and 10. Because of the way we captured our data, we simply needed to change the parameter in our call to designModel() in order to reference another dataset and run the model. Below, we have the results of the algorithm for the puzzles that required two moves to solve.
 
-Results on following pages:
-
 ![](RackMultipart20211208-4-18jw9y3_html_fa4bcb8ea96c4f92.png)
 
 ![](RackMultipart20211208-4-18jw9y3_html_f90e9500a5d085b5.png)
